@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Lms.Core.Entities
+namespace Lms.Core.Dto
 {
-    public class Course
+    public class CourseDto
     {
         public int Id { get; set; }
-
-        [Required]
-        [MaxLength(30)]
         public string Title { get; set; }
         public DateTime StartDate { get; set; }
-        public ICollection<Module> Modules { get; set; }
+        public DateTime EndDate { get { return StartDate.AddMonths(3); } }
+
+        public ICollection<ModuleDto> Modules { get; set; }
     }
 }

@@ -25,13 +25,18 @@ namespace Lms.Data.Data
                 {
                     var course = new Course
                     {
-                        Title = fake.Company.CatchPhrase(),
+                        Title = fake.Commerce.ProductName(),
                         StartDate = DateTime.Now.AddDays(fake.Random.Int(-2, 2)),
                         Modules = new Module[]
                         {
                             new Module
                             {
-                               Title = fake.Company.CompanyName(),
+                               Title = fake.Commerce.Product(),
+                               StartDate = DateTime.Now.AddDays(fake.Random.Int(-2, 2))
+                            },
+                            new Module
+                            {
+                               Title = fake.Commerce.Product(),
                                StartDate = DateTime.Now.AddDays(fake.Random.Int(-2, 2))
                             }
 

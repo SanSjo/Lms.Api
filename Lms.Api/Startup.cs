@@ -40,6 +40,8 @@ namespace Lms.Api
             services.AddDbContext<LmsApiContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("LmsApiContext")));
 
+            services.AddAutoMapper(typeof(MapperProfile));
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 

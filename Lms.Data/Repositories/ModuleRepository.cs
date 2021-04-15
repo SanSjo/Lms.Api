@@ -10,35 +10,41 @@ using System.Threading.Tasks;
 namespace Lms.Data.Repositories
 {
     class ModuleRepository : IModuleRepository
-    { 
-
-    private readonly LmsApiContext db;
-
-    public ModuleRepository(LmsApiContext db)
     {
-        this.db = db;
-    }
 
-    public async Task<IEnumerable<Module>> GetAllModules()
-    {
-        return await db.Module.ToListAsync();
-    }
+        private readonly LmsApiContext db;
 
-    public async Task<Module> GetModule(int? id)
-    {
-        var module = await db.Module.FindAsync(id);
+        public ModuleRepository(LmsApiContext db)
+        {
+            this.db = db;
+        }
 
-        return module;
-    }
+        public async Task<IEnumerable<Module>> GetAllModules()
+        {
+            return await db.Module.ToListAsync();
+        }
 
-    public async Task<bool> SaveAsync()
-    {
-        return (await db.SaveChangesAsync() >= 0);
-    }
+        public async Task<Module> GetModule(string title)
+        {
+            var module = await db.Module.FirstOrDefaultAsync(m => m.Title == title);
 
-    public async Task AddAsync<T>(T added)
-    {
-        await db.AddAsync(added);
+            return module;
+        }
+
+        public async Task<bool> SaveAsync()
+        {
+            return (await db.SaveChangesAsync() >= 0);
+        }
+
+        public async Task AddAsync<T>(T added)
+        {
+            await db.AddAsync(added);
+        }
+
+        public void Remove<T>(T removed)
+        {
+            db.Remove(removed);
+        }
+
     }
-}
 }
