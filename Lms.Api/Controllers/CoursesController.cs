@@ -29,14 +29,12 @@ namespace Lms.Api.Controllers
 
         // GET: api/Courses
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourse(string mainCategory, bool includeModules = false)
+        public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourse(bool includeModules = false)
         {
-            //return (ActionResult)await uow.CourseRepository.GetAllCourses();
             var courses = await uow.CourseRepository.GetAllCourses(includeModules);
-            var filter = await uow.CourseRepository.GetAllCourses(mainCategory);
+
             var coursesDto = mapper.Map<IEnumerable<CourseDto>>(courses);
 
-            mapper.Map(coursesDto, filter);
             return Ok(coursesDto);
         }
 
@@ -68,8 +66,6 @@ namespace Lms.Api.Controllers
 
             mapper.Map(dto, course);
 
-            //var dto = mapper.Map<Course>(course);
-            //_context.Entry(dto).State = EntityState.Modified;
 
             if(await uow.CourseRepository.SaveAsync())
             {
@@ -79,24 +75,7 @@ namespace Lms.Api.Controllers
             {
                 return StatusCode(500);
             }
-            
-            //try
-            //{
-            //    await uow.CompleteAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!CourseExists(id))
-            //    {
-            //        return StatusCode(500);
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
 
-            //return NoContent();
         }
 
         // POST: api/Courses

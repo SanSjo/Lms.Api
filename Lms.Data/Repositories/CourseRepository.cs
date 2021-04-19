@@ -32,19 +32,7 @@ namespace Lms.Data.Repositories
 
            
         }
-        
-        public async Task<IEnumerable<Course>> GetAllCourses(string mainCategory)
-        {
-
-            if (string.IsNullOrWhiteSpace(mainCategory))
-            {
-                return await GetCourses();
-            }
-
-            mainCategory = mainCategory.Trim();
-            return db.Course.Where(a => a.Title == mainCategory).ToList();
-           
-        }
+       
 
         public async Task<Course> GetCourse(int? id)
         {
