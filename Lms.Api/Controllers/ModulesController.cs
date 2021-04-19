@@ -130,9 +130,5 @@ namespace Lms.Api.Controllers
             return NoContent();
         }
 
-        private bool ModuleExists(int id)
-        {
-            return _context.Module.Any(e => e.Id == id);
-        }
     }
 }

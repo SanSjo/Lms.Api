@@ -4,6 +4,7 @@ using Lms.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,11 +19,31 @@ namespace Lms.Data.Repositories
             this.db = db;
         }
 
-   
+        public async Task<IEnumerable<Course>> GetCourses()
+        {
+            return await db.Course.ToListAsync<Course>();
+        }
 
         public async Task<IEnumerable<Course>> GetAllCourses(bool includeModules)
         {
+
+
             return includeModules ? await db.Course.ToListAsync() : await db.Course.Include(c => c.Modules).ToListAsync();
+
+           
+        }
+        
+        public async Task<IEnumerable<Course>> GetAllCourses(string mainCategory)
+        {
+
+            if (string.IsNullOrWhiteSpace(mainCategory))
+            {
+                return await GetCourses();
+            }
+
+            mainCategory = mainCategory.Trim();
+            return db.Course.Where(a => a.Title == mainCategory).ToList();
+           
         }
 
         public async Task<Course> GetCourse(int? id)
